@@ -432,6 +432,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   card: {
+    // flex:1,
     width: "90%",
     marginBottom: 16,
     padding: 16,
