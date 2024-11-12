@@ -202,11 +202,13 @@ export default function HomeScreen() {
             resizeMode="contain"
           />
           <View style={styles.headerIcons}>
+            <Link href="/(tabs)/AuthFormModal" style={styles.link}>
             <Image
               source={require("../../assets/images/bx_bx-user-check.svg")}
               style={styles.headerIcon}
               resizeMode="contain"
             />
+            </Link>
             <Image
               source={require("../../assets/images/carbon_shopping-cart-plus.svg")}
               style={styles.headerIcon}
@@ -472,3 +474,5 @@ const styles = StyleSheet.create({
     display: "block",
   },
 });
+
+
