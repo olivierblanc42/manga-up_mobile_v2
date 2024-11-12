@@ -1,65 +1,124 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
-import { Link } from 'expo-router';
-import axios from 'axios';
 
-const AuthFormModal = () => {
+// import * as React from "react";
+// import { useState } from "react";
+// import { StyleSheet } from "react-nativescript";
+
+// export function AuthFormModal({ navigation }) {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+
+//   const handleLogin = async () => {
+//     try {
+//       // Implement your API call here
+//       const response = await fetch('http://localhost:8080/api/users/login', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ email, password }),
+//       });
+      
+//       const data = await response.json();
+//       if (response.ok) {
+//         // Handle successful login
+//         navigation.navigate('One');
+//       }
+//     } catch (error) {
+//       console.error('Login error:', error);
+//     }
+//   };
+
+//   return (
+//     <flexboxLayout className="flex-1 justify-center p-4 bg-white">
+//       <label className="text-2xl font-bold text-center mb-6">Login</label>
+      
+//       <textField
+//         className="border rounded p-2 mb-4"
+//         hint="Email"
+//         keyboardType="email"
+//         text={email}
+//         onTextChange={(e) => setEmail(e.value)}
+//       />
+      
+//       <textField
+//         className="border rounded p-2 mb-6"
+//         hint="Password"
+//         secure={true}
+//         text={password}
+//         onTextChange={(e) => setPassword(e.value)}
+//       />
+      
+//       <button
+//         className="bg-blue-500 text-white p-3 rounded-lg mb-4"
+//         onTap={handleLogin}
+//       >
+//         Login
+//       </button>
+      
+//       <button
+//         className="text-blue-500"
+//         onTap={() => navigation.navigate('Register')}
+//       >
+//         Create new account
+//       </button>
+//     </flexboxLayout>
+//   );
+// }
+
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+
+const AuthFormModal = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleLogin = async () => {
     try {
-      setLoading(true);
-      const response = await axios.post('http://localhost:8080/api/users/login', {
-        email,
-        password,
+      // Implement your API call here
+      const response = await fetch('http://localhost:8080/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
-      console.log(response.data);
-      // Gérez la réponse de l'API (enregistrer le token, rediriger l'utilisateur, etc.)
-    } catch (err) {
-      console.error(err);
-      setError('Une erreur s\'est produite lors de la connexion. Veuillez réessayer.');
-    } finally {
-      setLoading(false);
+
+      const data = await response.json();
+      if (response.ok) {
+        // Handle successful login
+        navigation.navigate('One');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
     }
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>Connexion</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Mot de passe"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-        {error && <Text style={styles.error}>{error}</Text>}
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          {loading ? (
-            <ActivityIndicator color="#fff" />
-          ) : (
-            <Text style={styles.buttonText}>Se connecter</Text>
-          )}
-        </TouchableOpacity>
-        <View style={styles.registerContainer}>
-          <Text style={styles.registerText}>Pas de compte ?</Text>
-          <Link href="/RegisterFormModal" style={styles.registerLink}>
-            S'inscrire
-          </Link>
-        </View>
-      </View>
+      <Text style={styles.title}>Login</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.link}
+        onPress={() => navigation.navigate('Register')}
+      >
+        <Text style={styles.linkText}>Create new account</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -69,51 +128,40 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  formContainer: {
     backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 8,
-    width: '80%',
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 24,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
     padding: 12,
-    marginBottom: 12,
+    width: '100%',
+    marginBottom: 16,
   },
   button: {
     backgroundColor: '#007AFF',
     borderRadius: 4,
     padding: 12,
+    width: '100%',
     alignItems: 'center',
+    marginBottom: 16,
   },
   buttonText: {
     color: '#fff',
+    fontSize: 16,
     fontWeight: 'bold',
   },
-  error: {
-    color: 'red',
-    marginBottom: 12,
+  link: {
+    alignSelf: 'flex-end',
   },
-  registerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 16,
-  },
-  registerText: {
-    color: '#666',
-  },
-  registerLink: {
+  linkText: {
     color: '#007AFF',
-    marginLeft: 4,
   },
 });
 
