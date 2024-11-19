@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 export function CustomButton({
   text,
-  onTap,
+  onPress,
   variant = "primary",
   disabled = false,
   style = {},
@@ -22,14 +22,14 @@ export function CustomButton({
   ];
 
   return (
-    <TouchableOpacity
+    <Pressable
       style={buttonStyles}
-      onPress={onTap}
+      onPress={onPress}
       disabled={disabled}
       activeOpacity={0.7}
     >
       <Text style={textStyles}>{text}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 

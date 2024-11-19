@@ -66,42 +66,58 @@
 // }
 
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { Link, useRouter } from "expo-router";
+
 
 const AuthFormModal = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+  const router = useRouter();
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     try {
       // Implement your API call here
+      console.log(`${typeof(username)}`)
+      console.log(`${typeof(password)}`)
       const response = await fetch('http://localhost:8080/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({username, password }),
       });
 
       const data = await response.json();
+      console.log(`${Object.keys(data)} data`);
+      console.log(`${data.status} data`);
+      console.log(data.address);
+      // console.log('Response status:', response.status);
+      // console.log('Response body:', await response.text());
       if (response.ok) {
         // Handle successful login
-        navigation.navigate('One');
+        // navigation.navigate('One');
+        router.replace("/")
+      }else {
+        console.error('Login failed:', response.status, data);
       }
     } catch (error) {
       console.error('Login error:', error);
+      // console.error('Failed to login:', response.status, data);
     }
   };
+
+  
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
+        placeholder="username "
+        keyboardType="default"
+        value={username}
+        onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}
@@ -110,15 +126,24 @@ const AuthFormModal = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <Pressable style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </Pressable>
+
+
+<Link href="/(tabs)/RegisterFormModal" style={styles.link}><button>Register</button></Link>
+
+      
+      {/* <Pressable
         style={styles.link}
-        onPress={() => navigation.navigate('Register')}
+      onPress={() => navigation.navigate(('register'))}
+      // onPress={() => <Link href="/(tabs)/RegisterFormModal" style={styles.link}></Link>}
+      
+
       >
+        
         <Text style={styles.linkText}>Create new account</Text>
-      </TouchableOpacity>
+      </Pressable> */}
     </View>
   );
 };

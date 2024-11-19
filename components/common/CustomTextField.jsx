@@ -1,20 +1,21 @@
 import * as React from "react";
+import { TextInput } from "react-native-web";
 
 export function CustomTextField({ 
   hint, 
   value, 
   onChangeText, 
   secure = false,
-  keyboardType = "text"
+  keyboardType = "default"
 }) {
   return (
-    <textField
+    <TextInput
       className="border rounded p-2 mb-4"
-      hint={hint}
-      text={value}
-      secure={secure}
+      placeholder = {hint}
+      value={value}
+      secureTextEntry={secure}
       keyboardType={keyboardType}
-      onTextChange={(e) => onChangeText(e.value)}
+      onChangeText={onChangeText}
     />
   );
 }
