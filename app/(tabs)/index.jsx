@@ -244,7 +244,7 @@ export default function HomeScreen() {
         </Link>
       </View>
       <View style={styles.linkContainer}>
-        <Link href="" style={styles.link}>
+        <Link href="/(tabs)/genre" style={styles.link}>
           <Text style={styles.linkText}>GENRE</Text>
           <svg
             style={styles.linkIcon}

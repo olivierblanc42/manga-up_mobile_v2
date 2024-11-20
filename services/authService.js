@@ -56,16 +56,12 @@ export const authService = {
 //   },
 // };
 async register({
-  username,
-  email,
   firstname,
   lastname,
+  username,
   password,
-  line1,
-  line2,
-  line3,
-  city,
-  PostalCode,
+  email,
+  address,
   gender,
 
 }) {
@@ -75,21 +71,20 @@ async register({
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username,
-      email,
+    body: JSON.stringify({ firstname,
       firstname,
       lastname,
+      username,
       password,
-      line1,
-      line2,
-      line3,
-      city,
-      PostalCode,
+      email,
+      address,
       gender,
       }),
   });
 
   console.log(response);
+  console.log("toto");
+
 
   if (!response.ok) {
     throw new Error("Registration failed");
